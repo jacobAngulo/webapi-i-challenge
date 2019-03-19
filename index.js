@@ -1,11 +1,13 @@
 // implement your API here
 const express = require("express");
+const cors = require("cors");
 
 const server = express();
 
 const db = require("./data/db.js");
 
 server.use(express.json());
+server.use(cors());
 
 server.get("/", (req, res) => {
   res.send("hola guey");
@@ -58,6 +60,7 @@ server.put("/users/:id", (req, res) => {
       .status(400)
       .json({ errorMessage: "Please provide name and bio for the user." });
   }
+  //   db.update(id, { ...updates, updated_at: Date.now() });
   db.update(id, updates)
     .then(updated => {
       if (updated) {
